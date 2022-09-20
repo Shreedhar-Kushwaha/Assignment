@@ -10,11 +10,10 @@ router.get("/:n", async (req, res) => {
    with u,t,c, count(u) as cnt where cnt>=${n} return u.name as LenderName,
    sum(c.principle) as Total`;
 
-  session
+  await session
     .run(query)
     .then(function (response) {
       response.records.forEach((element) => {
-        console.log(element);
         const result = {
           user: element.get("LenderName"),
           totalAmount: element.get("Total"),
